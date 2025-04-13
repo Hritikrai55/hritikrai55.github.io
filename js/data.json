@@ -1,0 +1,185 @@
+{
+  "basics": {
+    "name": "Hritik Rai",
+    "title": "Data Scientist",
+    "description": "I analyze data, build machine learning models, and create interactive visualizations to derive actionable insights.",
+    "email": "hritikrai55@gmail.com",
+    "phone": "9018285142",
+    "image": "assets/images/profile-placeholder.jpg",
+    "resumeFile": "assets/resume/hritik_scientist.pdf",
+    "copyrightYear": "2025"
+  },
+  "about": {
+    "summary": [
+      "Data Scientist with expertise in machine learning, data analysis, and visualization. Currently working as a Data Scientist Trainee at Almabetter where I conduct exploratory data analysis, perform hypothesis testing, and build machine learning models.",
+      "I'm passionate about extracting meaningful insights from data and developing solutions that make a real impact. With strong skills in Python, SQL, and visualization tools like Power BI and Tableau, I transform complex data into actionable business intelligence."
+    ]
+  },
+  "education": [
+    {
+      "institution": "Woolf University",
+      "degree": "Masters in CS: Artificial Intelligence and Machine Learning",
+      "dates": "January 2024 - Present"
+    },
+    {
+      "institution": "E&ICT IIT Guwahati - AlmaBetter",
+      "degree": "Advanced Certification in Full Stack Data Science",
+      "dates": "January 2024 - Present"
+    },
+    {
+      "institution": "University of Jammu",
+      "degree": "Bachelor of Science",
+      "dates": "August 2019 - September 2022",
+      "gpa": "CGPA: 7/10"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Almabetter",
+      "position": "Data Scientist Trainee",
+      "dates": "January 2024 - Present",
+      "highlights": [
+        "Conducted EDA on 1M+ records, improving data integrity by 22%",
+        "Performed hypothesis testing and regression analysis",
+        "Built interactive dashboards in Power BI and Tableau",
+        "Deployed ML models, boosting predictive accuracy by 15%"
+      ]
+    }
+  ],
+  "interests": [
+    "Data Analysis",
+    "Machine Learning",
+    "Data Visualization",
+    "Statistical Analysis"
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "icon": "fab fa-python",
+      "color": "text-blue-600",
+      "rating": "4.0/5"
+    },
+    {
+      "name": "SQL",
+      "icon": "fas fa-database",
+      "color": "text-blue-500",
+      "rating": "4.6/5"
+    },
+    {
+      "name": "Excel",
+      "icon": "fas fa-file-excel",
+      "color": "text-green-500",
+      "rating": "4.2/5"
+    },
+    {
+      "name": "Power BI",
+      "icon": "fas fa-chart-bar",
+      "color": "text-blue-400",
+      "rating": "4.3/5"
+    },
+    {
+      "name": "Tableau",
+      "icon": "fas fa-chart-line",
+      "color": "text-orange-500",
+      "rating": "4.1/5"
+    },
+    {
+      "name": "ML Models",
+      "icon": "fas fa-cogs",
+      "color": "text-purple-600",
+      "rating": "4.4/5"
+    },
+    {
+      "name": "Jupyter",
+      "icon": "fas fa-laptop-code",
+      "color": "text-indigo-500",
+      "rating": "Expert"
+    },
+    {
+      "name": "Colab",
+      "icon": "fab fa-google",
+      "color": "text-red-500",
+      "rating": "Expert"
+    },
+    {
+      "name": "Pandas",
+      "icon": "fas fa-table",
+      "color": "text-cyan-500",
+      "rating": "Expert"
+    },
+    {
+      "name": "NumPy",
+      "icon": "fas fa-calculator",
+      "color": "text-gray-700",
+      "rating": "Expert"
+    }
+  ],
+  "technicalSkills": [
+    "Python - 4.0",
+    "SQL - 4.6",
+    "Excel - 4.2",
+    "Power BI - 4.3",
+    "Tableau - 4.1",
+    "Model Building - 4.4"
+  ],
+  "platforms": [
+    "Jupyter Notebook",
+    "Google Colab",
+    "PGAdmin",
+    "VSCode"
+  ],
+  "frameworks": [
+    "Pandas",
+    "Numpy",
+    "Matplotlib",
+    "Seaborn",
+    "Beautifulsoup",
+    "Machine Learning Algorithms"
+  ],
+  "projects": [
+    {
+      "title": "Bike Sharing Demand Prediction",
+      "image": "assets/images/project1.jpg",
+      "description": "Created a predictive model to anticipate bike rental demand, reducing bike shortages during peak hours by 40% and enhancing customer satisfaction. Implemented ML models for accurate predictions and operational planning.",
+      "technologies": ["EDA", "Feature Engineering", "ML Models", "Hypothesis Testing"],
+      "githubUrl": "#",
+      "liveUrl": "#"
+    },
+    {
+      "title": "OYO Booking Analysis",
+      "image": "assets/images/project2.jpg",
+      "description": "Created an interactive Power BI dashboard analyzing hotel booking data, improving efficiency by 25% in identifying insights. Examined hotel performance metrics, including 10% year-over-year growth in booking revenue and guest stay trends.",
+      "technologies": ["Python", "Power BI", "Pandas", "DAX"],
+      "githubUrl": "#",
+      "liveUrl": "#"
+    },
+    {
+      "title": "Amazon Case Study",
+      "image": "assets/images/project3.jpg",
+      "description": "Conducted in-depth analysis on Amazon platform functionalities and designed innovative schema structures to support 2 million MAU. Applied SQL DDL concepts for efficient schemas, secured top 5 position in a database design competition.",
+      "technologies": ["SQL", "PgAdmin", "Schema Design", "Database Management"],
+      "githubUrl": "#",
+      "liveUrl": "#"
+    }
+  ],
+  "navigation": {
+    "items": [
+      {
+        "name": "Home",
+        "link": "#home"
+      },
+      {
+        "name": "About",
+        "link": "#about"
+      },
+      {
+        "name": "Skills",
+        "link": "#skills"
+      },
+      {
+        "name": "Projects",
+        "link": "#projects"
+      }
+    ]
+  }
+}

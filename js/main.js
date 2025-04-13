@@ -31,12 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Build the entire website structure from JSON data
     function buildWebsite(data) {
+        // Create document title
+        document.title = `${data.basics.name} | ${data.basics.title}`;
+        
         // Build HTML structure
         appContainer.innerHTML = `
             ${buildNavigation(data)}
             ${buildHomeSection(data.basics)}
-            ${buildAboutSection(data.about, data.education, data.experience, data.interests)}
-            ${buildSkillsSection(data.skills)}
+            ${buildAboutSection(data)}
+            ${buildSkillsSection(data)}
             ${buildProjectsSection(data.projects)}
             ${buildFooter(data.basics, data.navigation)}
         `;
@@ -48,11 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to build navigation from JSON data
     function buildNavigation(data) {
         const { navigation, basics } = data;
-        const socialLinks = basics.profiles.map(profile => 
-            `<a href="${profile.url}" target="_blank" aria-label="${profile.network}" class="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors duration-300">
-                <i class="fab fa-${profile.network.toLowerCase()}"></i>
-            </a>`
-        ).join('');
+        // Since we don't have social profiles in our JSON, we'll just create empty socialLinks for now
+        const socialLinks = '';
         
         return `
         <header class="bg-white dark:bg-gray-900 shadow-sm fixed w-full top-0 z-50 transition-colors duration-300">
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <!-- Desktop Navigation -->
                     <div class="hidden md:flex items-center space-x-6">
                         <ul class="flex space-x-2" id="desktop-nav">
-                            ${navigation.map(item => 
-                                `<li><a href="#${item.id}" class="px-3 py-2 hover:text-primary transition-colors duration-300">${item.text}</a></li>`
+                            ${navigation.items.map(item => 
+                                `<li><a href="${item.link}" class="px-3 py-2 hover:text-primary transition-colors duration-300">${item.name}</a></li>`
                             ).join('')}
                         </ul>
                         
@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             </button>
                         </div>
                         <ul class="flex flex-col items-center justify-center h-full space-y-8" id="mobile-nav">
-                            ${navigation.map(item => 
-                                `<li><a href="#${item.id}" class="text-white text-2xl hover:text-primary transition-colors duration-300">${item.text}</a></li>`
+                            ${navigation.items.map(item => 
+                                `<li><a href="${item.link}" class="text-white text-2xl hover:text-primary transition-colors duration-300">${item.name}</a></li>`
                             ).join('')}
                             <li class="flex space-x-6 mt-8">
                                 ${socialLinks}
@@ -121,13 +121,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${basics.name}
                         </h1>
                         <p class="text-2xl md:text-3xl text-primary font-medium animate-on-scroll animation-delay-200">
-                            ${basics.label}
+                            ${basics.title}
                         </p>
                         <p class="text-lg text-gray-600 dark:text-gray-300 animate-on-scroll animation-delay-400">
-                            ${basics.summary}
+                            ${basics.description}
                         </p>
                         <div class="flex flex-wrap gap-4 animate-on-scroll animation-delay-600">
-                            <a href="${basics.resume}" class="bg-primary hover:bg-primary-dark text-white font-medium px-6 py-3 rounded-md transition-colors duration-300" target="_blank" rel="noopener noreferrer">
+                            <a href="${basics.resumeFile}" class="bg-primary hover:bg-primary-dark text-white font-medium px-6 py-3 rounded-md transition-colors duration-300" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-download mr-2"></i> Download CV
                             </a>
                             <a href="#contact" class="border border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-md transition-colors duration-300">
@@ -150,27 +150,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to build about section from JSON data
-    function buildAboutSection(about, education, experience, interests) {
+    function buildAboutSection(data) {
+        const { about, education, experience, interests } = data;
+        
         // Build education HTML
-        const educationHTML = education.items.map(item => `
+        const educationHTML = education.map(item => `
             <div class="mb-6 last:mb-0">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
                     <h4 class="text-lg font-bold">${item.institution}</h4>
-                    <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">${item.startDate} - ${item.endDate || 'Present'}</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">${item.dates}</span>
                 </div>
-                <p class="text-primary font-medium">${item.area}, ${item.studyType}</p>
-                <p class="text-gray-600 dark:text-gray-300 mt-2">${item.description || ''}</p>
+                <p class="text-primary font-medium">${item.degree}</p>
+                ${item.gpa ? `<p class="text-gray-600 dark:text-gray-300 mt-2">${item.gpa}</p>` : ''}
             </div>
         `).join('');
         
         // Build experience HTML
-        const experienceHTML = experience.items.map(item => `
+        const experienceHTML = experience.map(item => `
             <div class="mb-6 last:mb-0">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
                     <h4 class="text-lg font-bold">${item.position}</h4>
-                    <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">${item.startDate} - ${item.endDate || 'Present'}</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">${item.dates}</span>
                 </div>
-                <p class="text-primary font-medium">${item.company}, ${item.location}</p>
+                <p class="text-primary font-medium">${item.company}</p>
                 <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 mt-2 space-y-1">
                     ${item.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
                 </ul>
@@ -178,31 +180,31 @@ document.addEventListener('DOMContentLoaded', function() {
         `).join('');
         
         // Build interests HTML
-        const interestsHTML = interests.items.map(item => `
+        const interestsHTML = interests.map(interest => `
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm text-center">
                 <div class="bg-gray-100 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <i class="${item.icon} text-primary text-xl"></i>
+                    <i class="fas fa-star text-primary text-xl"></i>
                 </div>
-                <h4 class="font-medium">${item.name}</h4>
+                <h4 class="font-medium">${interest}</h4>
             </div>
         `).join('');
         
         return `
         <section id="about" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">${about.title}</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">About Me</h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     <div class="lg:col-span-2">
                         <div class="prose lg:prose-lg dark:prose-dark max-w-none mb-12">
-                            ${about.content.map(paragraph => `<p>${paragraph}</p>`).join('')}
+                            ${about.summary.map(paragraph => `<p>${paragraph}</p>`).join('')}
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <!-- Experience Section -->
                             <div>
                                 <h3 class="text-2xl font-bold mb-6 flex items-center">
-                                    <i class="fas fa-briefcase mr-3 text-primary"></i> ${experience.title}
+                                    <i class="fas fa-briefcase mr-3 text-primary"></i> Experience
                                 </h3>
                                 ${experienceHTML}
                             </div>
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <!-- Education Section -->
                             <div>
                                 <h3 class="text-2xl font-bold mb-6 flex items-center">
-                                    <i class="fas fa-graduation-cap mr-3 text-primary"></i> ${education.title}
+                                    <i class="fas fa-graduation-cap mr-3 text-primary"></i> Education
                                 </h3>
                                 ${educationHTML}
                             </div>
@@ -219,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <div>
                         <h3 class="text-2xl font-bold mb-6 flex items-center">
-                            <i class="fas fa-heart mr-3 text-primary"></i> ${interests.title}
+                            <i class="fas fa-heart mr-3 text-primary"></i> Interests
                         </h3>
                         <div class="grid grid-cols-2 gap-4">
                             ${interestsHTML}
@@ -232,41 +234,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to build skills section from JSON data
-    function buildSkillsSection(skills) {
-        // Build categories HTML
-        const categoriesHTML = skills.categories.map((category, index) => {
+    function buildSkillsSection(data) {
+        const { skills, technicalSkills, platforms, frameworks } = data;
+        
+        // Build primary skills HTML
+        const skillsHTML = skills.map((skill, index) => {
             const animationDelay = index * 100; // Staggered animation
+            const ratingValue = skill.rating.includes('/') ? 
+                (parseFloat(skill.rating.split('/')[0]) / parseFloat(skill.rating.split('/')[1]) * 100) : 
+                parseFloat(skill.rating) * 20; // If it's like 4.0/5, convert to percentage
             
             return `
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md animate-on-scroll" style="animation-delay: ${animationDelay}ms">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="${category.icon} text-primary mr-3"></i> ${category.name}
-                </h3>
-                <div class="space-y-5">
-                    ${category.skills.map(skill => `
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="font-medium">${skill.name}</span>
-                                ${skill.level ? `<span class="text-sm text-gray-500 dark:text-gray-400">${skill.level}%</span>` : ''}
-                            </div>
-                            ${skill.level ? `
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full transition-all duration-1000" style="width: 0%" data-width="${skill.level}%"></div>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `).join('')}
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                        <i class="${skill.icon} text-primary text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">${skill.name}</h3>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">${skill.rating}</div>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div class="bg-primary h-2 rounded-full transition-all duration-1000" style="width: 0%" data-width="${ratingValue}%"></div>
                 </div>
             </div>
             `;
         }).join('');
         
+        // Build frameworks, platforms, and technical skills sections
+        const technicalSkillsHTML = technicalSkills.map(skill => 
+            `<div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <span class="font-medium">${skill}</span>
+            </div>`
+        ).join('');
+        
+        const platformsHTML = platforms.map(platform => 
+            `<div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <span class="font-medium">${platform}</span>
+            </div>`
+        ).join('');
+        
+        const frameworksHTML = frameworks.map(framework => 
+            `<div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <span class="font-medium">${framework}</span>
+            </div>`
+        ).join('');
+        
         return `
         <section id="skills" class="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">${skills.title}</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    ${categoriesHTML}
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Skills & Expertise</h2>
+                
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-8 text-center">Core Skills</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        ${skillsHTML}
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-laptop-code text-primary mr-3"></i> Technical Skills
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            ${technicalSkillsHTML}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-desktop text-primary mr-3"></i> Platforms
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            ${platformsHTML}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-code text-primary mr-3"></i> Frameworks & Libraries
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            ${frameworksHTML}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -276,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to build projects section from JSON data
     function buildProjectsSection(projects) {
         // Build project cards HTML
-        const projectsHTML = projects.items.map((project, index) => {
+        const projectsHTML = projects.map((project, index) => {
             const animationDelay = index * 100; // Staggered animation
             
             return `
@@ -293,13 +346,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         `).join('')}
                     </div>
                     <div class="flex space-x-4">
-                        ${project.github ? `
-                            <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-300">
+                        ${project.githubUrl ? `
+                            <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-300">
                                 <i class="fab fa-github text-xl"></i>
                             </a>
                         ` : ''}
-                        ${project.demo ? `
-                            <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-300">
+                        ${project.liveUrl ? `
+                            <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-300">
                                 <i class="fas fa-external-link-alt text-xl"></i>
                             </a>
                         ` : ''}
@@ -312,8 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return `
         <section id="projects" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">${projects.title}</h2>
-                <p class="text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-16">${projects.description}</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">Projects</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-16">A selection of my data science and machine learning projects</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     ${projectsHTML}
@@ -325,15 +378,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to build footer section from JSON data
     function buildFooter(basics, navigation) {
-        const currentYear = new Date().getFullYear();
-        const socialLinks = basics.profiles.map(profile => 
-            `<a href="${profile.url}" target="_blank" aria-label="${profile.network}" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors duration-300 text-xl">
-                <i class="fab fa-${profile.network.toLowerCase()}"></i>
-            </a>`
-        ).join('');
+        const copyrightYear = basics.copyrightYear || new Date().getFullYear();
         
-        const navLinks = navigation.map(item => 
-            `<a href="#${item.id}" class="hover:text-primary transition-colors duration-300">${item.text}</a>`
+        const navLinks = navigation.items.map(item => 
+            `<a href="${item.link}" class="hover:text-primary transition-colors duration-300">${item.name}</a>`
         ).join('');
         
         return `
@@ -342,21 +390,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                     <div class="mb-6 md:mb-0">
                         <h2 class="text-3xl font-bold text-primary mb-4">${basics.name}</h2>
-                        <p class="text-gray-600 dark:text-gray-300 max-w-md">${basics.summary}</p>
+                        <p class="text-gray-600 dark:text-gray-300 max-w-md">${basics.description}</p>
                     </div>
                     
                     <div class="space-y-6">
-                        <div class="flex justify-center md:justify-end space-x-4">
-                            ${socialLinks}
-                        </div>
-                        
                         <div>
                             <h3 class="font-bold text-lg mb-3">Contact</h3>
                             <p class="text-gray-600 dark:text-gray-300 mb-1">
                                 <i class="fas fa-envelope mr-2 text-primary"></i> ${basics.email}
                             </p>
                             <p class="text-gray-600 dark:text-gray-300">
-                                <i class="fas fa-map-marker-alt mr-2 text-primary"></i> ${basics.location.city}, ${basics.location.region}, ${basics.location.country}
+                                <i class="fas fa-phone mr-2 text-primary"></i> ${basics.phone}
                             </p>
                         </div>
                     </div>
@@ -364,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-8">
                     <div class="flex flex-col md:flex-row justify-between items-center">
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">&copy; ${currentYear} ${basics.name}. All rights reserved.</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">&copy; ${copyrightYear} ${basics.name}. All rights reserved.</p>
                         <div class="flex space-x-4 mt-4 md:mt-0">
                             ${navLinks}
                         </div>

@@ -90,18 +90,84 @@ nav a {
   transition: var(--transition);
 }
 
-/* Dark Mode Styles */
+/* Dark Mode Styles - Improved Contrast */
+:root {
+  --dark-bg-color: #121927;
+  --dark-text-color: #ffffff;
+  --dark-muted-text: #e2e8f0;
+  --dark-card-bg: #1f2937;
+}
+
 .dark body {
-  background-color: var(--bg-dark);
-  color: var(--text-light);
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
 }
 
-.dark .bg-white {
-  background-color: var(--bg-dark);
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark [class*="bg-gray-"] {
+  background-color: var(--dark-bg-color);
 }
 
-.dark .text-gray-600 {
-  color: #9ca3af;
+.dark .bg-gray-700,
+.dark .bg-gray-800,
+.dark .bg-gray-900 {
+  background-color: var(--dark-card-bg);
+}
+
+/* Fix text colors with high specificity */
+html.dark body p,
+html.dark body h1,
+html.dark body h2,
+html.dark body h3,
+html.dark body h4,
+html.dark body h5,
+html.dark body h6,
+html.dark body span,
+html.dark body li,
+html.dark body div {
+  color: var(--dark-text-color) !important;
+}
+
+html.dark .text-gray-600,
+html.dark .text-gray-500,
+html.dark .text-gray-400,
+html.dark .text-gray-300,
+html.dark [class*="text-gray-"] {
+  color: var(--dark-muted-text) !important;
+}
+
+/* Fix project card text specifically */
+html.dark .project-card p {
+  color: #e2e8f0 !important;
+}
+
+/* Fix technology tags in projects */
+html.dark .bg-blue-100.dark\:bg-blue-900 {
+  background-color: #1e40af !important;
+}
+
+html.dark .text-blue-800.dark\:text-blue-200 {
+  color: #bfdbfe !important;
+}
+
+/* Ensure links are visible */
+html.dark a:not(.btn):not([class*="bg-"]) {
+  color: #60a5fa !important;
+}
+
+/* Fix card backgrounds */
+html.dark .bg-white.dark\:bg-gray-700 {
+  background-color: #1f2937 !important;
+}
+
+/* Enhance contrast in project cards */
+html.dark .project-card .bg-white.dark\:bg-gray-700 {
+  background-color: #1f2937 !important;
+}
+
+html.dark .project-card .rounded-full {
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Button Styles */
@@ -170,29 +236,7 @@ button {
   transform: translateY(-5px);
 }
 
-/* Form Styles */
-form input,
-form textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-}
-
-.dark form input,
-.dark form textarea {
-  background-color: var(--bg-card-dark);
-  border-color: #374151;
-  color: var(--text-light);
-}
-
-form input:focus,
-form textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-}
+/* Form Styles - Removed */
 
 /* Media Queries */
 @media (max-width: 768px) {
@@ -273,34 +317,7 @@ form textarea:focus {
   color: var(--text-light);
 }
 
-/* Contact Form Success Message */
-.success-message {
-  display: none;
-  background-color: #10b981;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  margin-top: 1rem;
-}
-
-/* Loading Spinner */
-.spinner {
-  display: none;
-  width: 2rem;
-  height: 2rem;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Contact Form Styles - Removed */
 
 /* Utilities */
 .shadow-hover:hover {

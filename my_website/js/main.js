@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const themeToggle = document.getElementById('theme-toggle');
-    const contactForm = document.getElementById('contact-form');
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
     
@@ -42,41 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Contact form submission
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Form validation
-            if (!name || !email || !message) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            // This would typically connect to a backend service
-            // For demo purposes, we'll just show a success message
-            const successMessage = document.createElement('div');
-            successMessage.classList.add('success-message');
-            successMessage.style.display = 'block';
-            successMessage.innerHTML = 'Thank you for your message! I\'ll get back to you soon.';
-            
-            // Add success message to the form
-            contactForm.appendChild(successMessage);
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Remove success message after 5 seconds
-            setTimeout(() => {
-                successMessage.remove();
-            }, 5000);
-        });
-    }
+    // Contact form has been removed
     
     // Scroll animation function
     function animateOnScroll() {

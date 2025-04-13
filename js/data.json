@@ -5,8 +5,8 @@
     "description": "I analyze data, build machine learning models, and create interactive visualizations to derive actionable insights.",
     "email": "hritikrai55@gmail.com",
     "phone": "9018285142",
-    "image": "assets/images/profile_pic.jpg",
-    "resumeFile": "assets/resume/hritik_scientist.pdf",
+    "image": "./assets/images/profile_pic.jpg",
+    "resumeFile": "./assets/resume/hritik_scientist.pdf",
     "copyrightYear": "2025"
   },
   "about": {
@@ -139,7 +139,7 @@
   "projects": [
     {
       "title": "Bike Sharing Demand Prediction",
-      "image": "assets/images/project1.jpg",
+      "image": "./assets/images/project1.jpg",
       "description": "Created a predictive model to anticipate bike rental demand, reducing bike shortages during peak hours by 40% and enhancing customer satisfaction. Implemented ML models for accurate predictions and operational planning.",
       "technologies": ["EDA", "Feature Engineering", "ML Models", "Hypothesis Testing"],
       "githubUrl": "#",
@@ -147,7 +147,7 @@
     },
     {
       "title": "OYO Booking Analysis",
-      "image": "assets/images/project2.jpg",
+      "image": "./assets/images/project2.jpg",
       "description": "Created an interactive Power BI dashboard analyzing hotel booking data, improving efficiency by 25% in identifying insights. Examined hotel performance metrics, including 10% year-over-year growth in booking revenue and guest stay trends.",
       "technologies": ["Python", "Power BI", "Pandas", "DAX"],
       "githubUrl": "#",
@@ -155,7 +155,7 @@
     },
     {
       "title": "Amazon Case Study",
-      "image": "assets/images/project3.jpg",
+      "image": "./assets/images/project3.jpg",
       "description": "Conducted in-depth analysis on Amazon platform functionalities and designed innovative schema structures to support 2 million MAU. Applied SQL DDL concepts for efficient schemas, secured top 5 position in a database design competition.",
       "technologies": ["SQL", "PgAdmin", "Schema Design", "Database Management"],
       "githubUrl": "#",

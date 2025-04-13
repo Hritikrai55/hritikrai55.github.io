@@ -17,15 +17,48 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load data from JSON and update the portfolio
     async function loadPortfolioData() {
         try {
-            const response = await fetch('js/data.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            // Try different potential paths to the data.json file
+            // This helps with both local development and GitHub Pages
+            const potentialPaths = [
+                'js/data.json',                     // Direct path (local development)
+                './js/data.json',                   // Relative path
+                '/my_website/js/data.json',         // GitHub Pages path
+                '/js/data.json'                     // Root-relative path
+            ];
+            
+            let response;
+            let data;
+            let loaded = false;
+            
+            // Try each path until one works
+            for (const path of potentialPaths) {
+                try {
+                    console.log(`Trying to load from: ${path}`);
+                    response = await fetch(path);
+                    if (response.ok) {
+                        data = await response.json();
+                        loaded = true;
+                        console.log(`Successfully loaded data from: ${path}`);
+                        break;
+                    }
+                } catch (pathError) {
+                    console.log(`Failed to load from ${path}:`, pathError.message);
+                }
             }
-            const data = await response.json();
-            buildWebsite(data);
+            
+            if (loaded) {
+                buildWebsite(data);
+            } else {
+                throw new Error('Could not load data.json from any path');
+            }
         } catch (error) {
             console.error('Error loading portfolio data:', error);
-            appContainer.innerHTML = `<div class="container mx-auto p-8 text-center"><h1 class="text-xl">Error loading portfolio data. Please try again later.</h1></div>`;
+            appContainer.innerHTML = `
+                <div class="container mx-auto p-8 text-center">
+                    <h1 class="text-xl mb-4">Error loading portfolio data</h1>
+                    <p class="text-gray-600 dark:text-gray-400">${error.message}</p>
+                    <p class="mt-4">Please try again later or contact the site administrator.</p>
+                </div>`;
         }
     }
     

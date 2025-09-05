@@ -2,6 +2,8 @@
 
 Welcome to my personal website! This is where I share information about myself, my work, and my projects as a Data Scientist and Machine Learning Engineer.
 
+- 🌐 [Website](https://hritikrai55.github.io/)
+
 ## What You'll Find Here
 
 This website is like my digital business card and portfolio all in one. It's designed to give you a complete picture of who I am professionally and what I do.
